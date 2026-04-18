@@ -42,3 +42,5 @@ build/
 .DS_Store
 
 ios.local.properties
+
+src/main/resources/local.properties

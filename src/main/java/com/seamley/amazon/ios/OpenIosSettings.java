@@ -9,13 +9,17 @@ import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Properties;
 
 public final class OpenIosSettings {
 
     private static final String DEFAULT_APPIUM_URL = "http://127.0.0.1:4723/";
     private static final String DEFAULT_IOS_PLATFORM_VERSION = "26.4";
+    private static final String PROPERTIES_FILE = "local.properties";
+
     /**
      * Amazon Shopping on iPhone (typical US App Store install); change if your store build uses another id.
      */
@@ -26,21 +30,30 @@ public final class OpenIosSettings {
     private static final String UPDATED_WDA_BUNDLE_ID = "com.seamley.amazon.WebDriverAgentRunner";
     private static final By ME_TAB = AppiumBy.iOSNsPredicateString("name == \"meTab\"");
     private static final By ORDERS = AppiumBy.iOSNsPredicateString("name == \"bac_yo\"");
-    /** Section header for Purchase history (from page source). Used to assert Orders screen loaded this block. */
+    /**
+     * Section header for Purchase history (from page source). Used to assert Orders screen loaded this block.
+     */
     private static final By PURCHASE_HISTORY = AppiumBy.iOSNsPredicateString(
             "name == \"Purchase history\" AND label == \"Purchase history\" AND value == \"1\"");
 
     public static void main(String[] args) throws Exception {
         String appiumUrl = cfg("appium.serverUrl", DEFAULT_APPIUM_URL, "APPIUM_SERVER_URL");
-        String udid = cfg("ios.udid", "", "IOS_UDID", "UDID");
         String platformVersion = cfg("ios.platformVersion", DEFAULT_IOS_PLATFORM_VERSION, "IOS_PLATFORM_VERSION");
-        String xcodeOrgId = cfg("ios.xcodeOrgId", "", "IOS_XCODE_ORG_ID", "TEAM_ID");
-        String xcodeSigningId = cfg("ios.xcodeSigningId", "Apple Development", "IOS_XCODE_SIGNING_ID");
+        Properties props = new Properties();
+        try (InputStream in = OpenIosSettings.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
+            if (in == null) {
+                throw new IllegalStateException("Classpath resource not found: " + PROPERTIES_FILE);
+            }
+            props.load(in);
+        }
+        String udid = props.getProperty("UDID", null);
+        String xcodeOrgId = props.getProperty("IOS_XCODE_ORG_ID", null);
+        String xcodeSigningId = "Apple Development";
 
-        if (udid.isEmpty()) {
+        if (udid == null) {
             throw new IllegalStateException("Missing UDID. Set env UDID or IOS_UDID, or -Dios.udid (IntelliJ → Run → Environment variables).");
         }
-        if (xcodeOrgId.isEmpty()) {
+        if (xcodeOrgId == null) {
             throw new IllegalStateException(
                     "Missing Team ID. Set env IOS_XCODE_ORG_ID or TEAM_ID, or -Dios.xcodeOrgId.");
         }
