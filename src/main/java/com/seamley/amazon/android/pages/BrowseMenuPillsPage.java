@@ -2,7 +2,6 @@ package com.seamley.amazon.android.pages;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,15 +20,9 @@ public class BrowseMenuPillsPage extends AbstractAmazonPage {
     public static final String MENU_ITEM_TILE_SINGLE_LINE_CONTAINER =
             APP_PACKAGE + ":id/Menu-Item-Tile-Single-Line-Container";
 
-    public static final String PILL_LISTS_RESOURCE_ID = APP_PACKAGE + ":id/image_menu_item_pill_wl";
     public static final String PILL_ORDERS_RESOURCE_ID = APP_PACKAGE + ":id/image_menu_item_pill_yo";
-    public static final String PILL_BUY_AGAIN_RESOURCE_ID = APP_PACKAGE + ":id/image_menu_item_pill_bya";
-    public static final String PILL_ACCOUNT_RESOURCE_ID = APP_PACKAGE + ":id/image_menu_item_pill_ya";
 
-    public static final String DESC_LISTS = "Lists";
     public static final String DESC_ORDERS = "Orders";
-    public static final String DESC_BUY_AGAIN = "Buy Again";
-    public static final String DESC_ACCOUNT = "Account";
 
     private static final Duration DEFAULT_WAIT = Duration.ofSeconds(30);
 
@@ -76,112 +69,21 @@ public class BrowseMenuPillsPage extends AbstractAmazonPage {
         };
     }
 
-    public WebElement scrolledHamburgerView() {
-        waitForMenuTileRowVisible();
-        List<By> tries = Arrays.asList(
-                byResourceId(SCROLLED_HAMBURGER_VIEW_RESOURCE_ID),
-                By.xpath("//*[contains(@resource-id,'scrolled-hamburger-view')]"));
-        for (By by : tries) {
-            try {
-                List<WebElement> found = driver.findElements(by);
-                if (!found.isEmpty()) {
-                    return found.get(0);
-                }
-            } catch (Exception ignored) {
-            }
-        }
-        return wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//*[contains(@resource-id,'scrolled-hamburger-view')]")));
-    }
-
-    public WebElement menuTileContainer() {
-        waitForMenuTileRowVisible();
-        List<By> tries = Arrays.asList(
-                underScrolledHamburger("Menu-Item-Tile-Single-Line-Container"),
-                byResourceId(MENU_ITEM_TILE_SINGLE_LINE_CONTAINER),
-                By.xpath("//*[contains(@resource-id,'Menu-Item-Tile-Single-Line-Container')]"),
-                By.xpath("//*[contains(@resource-id,'Menu-Item-Tile')]"));
-        for (By by : tries) {
-            try {
-                List<WebElement> found = driver.findElements(by);
-                if (!found.isEmpty()) {
-                    return found.get(0);
-                }
-            } catch (Exception ignored) {
-            }
-        }
-        throw new org.openqa.selenium.NoSuchElementException("Browse menu tile container not found; pills may still work via tapOrders().");
-    }
-
-    public List<WebElement> pillElements() {
-        return Arrays.asList(
-                findPillElement(PILL_LISTS_RESOURCE_ID),
-                findPillElement(PILL_ORDERS_RESOURCE_ID),
-                findPillElement(PILL_BUY_AGAIN_RESOURCE_ID),
-                findPillElement(PILL_ACCOUNT_RESOURCE_ID));
-    }
-
-    public WebElement pillLists() {
-        return findPillElement(PILL_LISTS_RESOURCE_ID);
-    }
-
-    public WebElement pillOrders() {
-        return findPillElement(PILL_ORDERS_RESOURCE_ID);
-    }
-
-    public WebElement pillBuyAgain() {
-        return findPillElement(PILL_BUY_AGAIN_RESOURCE_ID);
-    }
-
-    public WebElement pillAccount() {
-        return findPillElement(PILL_ACCOUNT_RESOURCE_ID);
-    }
-
-    public void tapLists() {
-        tapPill(PILL_LISTS_RESOURCE_ID, DESC_LISTS);
-    }
-
     public void tapOrders() {
-        tapPill(PILL_ORDERS_RESOURCE_ID, DESC_ORDERS);
+        tapPill();
     }
 
-    public void tapBuyAgain() {
-        tapPill(PILL_BUY_AGAIN_RESOURCE_ID, DESC_BUY_AGAIN);
-    }
-
-    public void tapAccount() {
-        tapPill(PILL_ACCOUNT_RESOURCE_ID, DESC_ACCOUNT);
-    }
-
-    private WebElement findPillElement(String fullResourceId) {
+    private void tapPill() {
         waitForMenuTileRowVisible();
-        String shortSuffix = shortResourceSuffix(fullResourceId);
+        String shortSuffix = shortResourceSuffix(BrowseMenuPillsPage.PILL_ORDERS_RESOURCE_ID);
         List<By> tries = Arrays.asList(
+                underScrolledHamburgerContentDesc(BrowseMenuPillsPage.DESC_ORDERS),
                 pillUnderHamburger(shortSuffix),
                 pillUnderHamburgerExactResourceId(shortSuffix),
                 By.xpath("//*[@resource-id='" + shortSuffix + "']"),
-                byResourceId(fullResourceId),
-                By.xpath("//*[contains(@resource-id,'" + shortSuffix + "')]"));
-        for (By by : tries) {
-            try {
-                return wait.until(ExpectedConditions.presenceOfElementLocated(by));
-            } catch (Exception ignored) {
-            }
-        }
-        throw new org.openqa.selenium.NoSuchElementException("Pill not found for id suffix: " + shortSuffix);
-    }
-
-    private void tapPill(String fullResourceId, String contentDescFallback) {
-        waitForMenuTileRowVisible();
-        String shortSuffix = shortResourceSuffix(fullResourceId);
-        List<By> tries = Arrays.asList(
-                underScrolledHamburgerContentDesc(contentDescFallback),
-                pillUnderHamburger(shortSuffix),
-                pillUnderHamburgerExactResourceId(shortSuffix),
-                By.xpath("//*[@resource-id='" + shortSuffix + "']"),
-                byResourceId(fullResourceId),
+                byResourceId(BrowseMenuPillsPage.PILL_ORDERS_RESOURCE_ID),
                 By.xpath("//*[contains(@resource-id,'" + shortSuffix + "')]"),
-                By.xpath("//*[@content-desc='" + contentDescFallback + "']"));
+                By.xpath("//*[@content-desc='" + BrowseMenuPillsPage.DESC_ORDERS + "']"));
         Exception last = null;
         for (By by : tries) {
             try {
