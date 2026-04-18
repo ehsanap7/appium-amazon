@@ -1,7 +1,7 @@
 package com.seamley.amazon.android.factory;
 
 import com.seamley.amazon.android.pages.BottomTabBarPage;
-import com.seamley.amazon.android.pages.BrowseMenuPillsPage;
+import com.seamley.amazon.android.pages.OrderPillsPage;
 import com.seamley.amazon.android.pages.OrdersRecentEmptyStatePage;
 import io.appium.java_client.android.AndroidDriver;
 
@@ -32,12 +32,12 @@ public final class AmazonPageFactory {
         return new BottomTabBarPage(driver, waitTimeout);
     }
 
-    public BrowseMenuPillsPage browseMenuPills() {
-        return new BrowseMenuPillsPage(driver);
+    public OrderPillsPage orderPills() {
+        return new OrderPillsPage(driver);
     }
 
-    public BrowseMenuPillsPage browseMenuPills(Duration waitTimeout) {
-        return new BrowseMenuPillsPage(driver, waitTimeout);
+    public OrderPillsPage orderPills(Duration waitTimeout) {
+        return new OrderPillsPage(driver, waitTimeout);
     }
 
     public OrdersRecentEmptyStatePage ordersRecentEmptyState() {

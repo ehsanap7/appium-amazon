@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
-public class BrowseMenuPillsPage extends AbstractAmazonPage {
+public class OrderPillsPage extends AbstractAmazonPage {
 
     public static final String APP_PACKAGE = "com.amazon.mShop.android.shopping";
 
@@ -28,20 +28,20 @@ public class BrowseMenuPillsPage extends AbstractAmazonPage {
 
     private final WebDriverWait wait;
 
-    public BrowseMenuPillsPage(AndroidDriver driver) {
+    public OrderPillsPage(AndroidDriver driver) {
         this(driver, DEFAULT_WAIT);
     }
 
-    public BrowseMenuPillsPage(AndroidDriver driver, Duration timeout) {
+    public OrderPillsPage(AndroidDriver driver, Duration timeout) {
         super(driver);
         this.wait = new WebDriverWait(driver, timeout);
     }
 
     public void waitForMenuTileRowVisible() {
-        wait.until(anyBrowseMenuLocatorPresent());
+        wait.until(anyOrderLocatorPresent());
     }
 
-    private static ExpectedCondition<Boolean> anyBrowseMenuLocatorPresent() {
+    private static ExpectedCondition<Boolean> anyOrderLocatorPresent() {
         List<By> locators = Arrays.asList(
                 byResourceId(SCROLLED_HAMBURGER_VIEW_RESOURCE_ID),
                 By.xpath("//*[contains(@resource-id,'scrolled-hamburger-view')]"),
@@ -75,15 +75,15 @@ public class BrowseMenuPillsPage extends AbstractAmazonPage {
 
     private void tapPill() {
         waitForMenuTileRowVisible();
-        String shortSuffix = shortResourceSuffix(BrowseMenuPillsPage.PILL_ORDERS_RESOURCE_ID);
+        String shortSuffix = shortResourceSuffix(OrderPillsPage.PILL_ORDERS_RESOURCE_ID);
         List<By> tries = Arrays.asList(
-                underScrolledHamburgerContentDesc(BrowseMenuPillsPage.DESC_ORDERS),
+                underScrolledHamburgerContentDesc(OrderPillsPage.DESC_ORDERS),
                 pillUnderHamburger(shortSuffix),
                 pillUnderHamburgerExactResourceId(shortSuffix),
                 By.xpath("//*[@resource-id='" + shortSuffix + "']"),
-                byResourceId(BrowseMenuPillsPage.PILL_ORDERS_RESOURCE_ID),
+                byResourceId(OrderPillsPage.PILL_ORDERS_RESOURCE_ID),
                 By.xpath("//*[contains(@resource-id,'" + shortSuffix + "')]"),
-                By.xpath("//*[@content-desc='" + BrowseMenuPillsPage.DESC_ORDERS + "']"));
+                By.xpath("//*[@content-desc='" + OrderPillsPage.DESC_ORDERS + "']"));
         Exception last = null;
         for (By by : tries) {
             try {

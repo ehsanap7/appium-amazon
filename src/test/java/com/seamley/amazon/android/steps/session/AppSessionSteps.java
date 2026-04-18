@@ -21,9 +21,4 @@ public final class AppSessionSteps {
         Assert.assertEquals(driver.getCurrentPackage(), ScenarioContext.APP_PACKAGE, "current package");
         System.out.println("Activity: " + driver.currentActivity());
     }
-
-    @When("I wait for the home screen to settle on Android")
-    public void waitForHome() throws InterruptedException {
-        Thread.sleep(3000);
-    }
 }

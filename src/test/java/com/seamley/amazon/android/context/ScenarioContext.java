@@ -2,7 +2,8 @@ package com.seamley.amazon.android.context;
 
 import com.seamley.amazon.android.factory.AmazonPageFactory;
 import com.seamley.amazon.android.pages.BottomTabBarPage;
-import com.seamley.amazon.android.pages.BrowseMenuPillsPage;
+import com.seamley.amazon.android.pages.OrderPillsPage;
+import com.seamley.amazon.android.pages.OrderPillsPage;
 import com.seamley.amazon.android.pages.OrdersRecentEmptyStatePage;
 import com.seamley.amazon.utils.AppiumUtils;
 import io.appium.java_client.android.AndroidDriver;
@@ -22,7 +23,7 @@ public final class ScenarioContext {
 
     private AndroidDriver driver;
     private BottomTabBarPage bottomTabBar;
-    private BrowseMenuPillsPage browseMenuPills;
+    private OrderPillsPage orderPills;
     private OrdersRecentEmptyStatePage ordersRecentEmptyState;
 
     public void startSession() throws MalformedURLException {
@@ -45,7 +46,7 @@ public final class ScenarioContext {
         bringAmazonToForeground();
         AmazonPageFactory factory = AmazonPageFactory.create(driver);
         bottomTabBar = factory.bottomTabBar();
-        browseMenuPills = factory.browseMenuPills();
+        orderPills = factory.orderPills();
         ordersRecentEmptyState = factory.ordersRecentEmptyState();
     }
 
@@ -58,7 +59,7 @@ public final class ScenarioContext {
         } finally {
             driver = null;
             bottomTabBar = null;
-            browseMenuPills = null;
+            orderPills = null;
             ordersRecentEmptyState = null;
         }
     }
@@ -83,8 +84,8 @@ public final class ScenarioContext {
         return bottomTabBar;
     }
 
-    public BrowseMenuPillsPage browseMenuPills() {
-        return browseMenuPills;
+    public OrderPillsPage orderMenuPills() {
+        return orderPills;
     }
 
     public OrdersRecentEmptyStatePage ordersRecentEmptyState() {

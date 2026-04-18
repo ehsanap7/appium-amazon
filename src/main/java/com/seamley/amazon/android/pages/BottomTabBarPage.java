@@ -35,42 +35,9 @@ public class BottomTabBarPage extends AbstractAmazonPage {
         return driver.findElements(by);
     }
 
-    public WebElement tabIconAt(int zeroBasedIndex) {
-        List<WebElement> icons = tabIcons();
-        if (zeroBasedIndex < 0 || zeroBasedIndex >= icons.size()) {
-            throw new IndexOutOfBoundsException(
-                    "Tab index " + zeroBasedIndex + " but only " + icons.size() + " tab icon(s) found.");
-        }
-        return icons.get(zeroBasedIndex);
-    }
-
-    public void tapBrowseMenuTab() {
-        tapByExactContentDescription();
-    }
-
-    private void tapByExactContentDescription() {
-        try {
-            By by = AppiumBy.androidUIAutomator(
-                    "new UiSelector().resourceId(\"" + BOTTOM_TAB_ICON_RESOURCE_ID + "\").description(\"" + BottomTabBarPage.BROWSE_MENU_TAB_CONTENT_DESCRIPTION + "\")");
-            wait.until(ExpectedConditions.elementToBeClickable(by)).click();
-        } catch (Exception e1) {
-            try {
-                By by = By.xpath("//*[@resource-id='" + BOTTOM_TAB_ICON_RESOURCE_ID + "' and @content-desc='" + BottomTabBarPage.BROWSE_MENU_TAB_CONTENT_DESCRIPTION + "']");
-                wait.until(ExpectedConditions.elementToBeClickable(by)).click();
-            } catch (Exception e2) {
-                tapByContentDescContains();
-            }
-        }
-    }
-
-    private void tapByContentDescContains() {
-        try {
-            By by = AppiumBy.androidUIAutomator(
-                    "new UiSelector().resourceId(\"" + BOTTOM_TAB_ICON_RESOURCE_ID + "\").descriptionContains(\"" + "Browse menu" + "\")");
-            wait.until(ExpectedConditions.elementToBeClickable(by)).click();
-        } catch (Exception e) {
-            By by = By.xpath("//*[@resource-id='" + BOTTOM_TAB_ICON_RESOURCE_ID + "' and contains(@content-desc,'" + "Browse menu" + "')]");
-            wait.until(ExpectedConditions.elementToBeClickable(by)).click();
-        }
+    public void tapHamburgerMenuTab() {
+        By by = AppiumBy.androidUIAutomator(
+                "new UiSelector().resourceId(\"" + BOTTOM_TAB_ICON_RESOURCE_ID + "\").description(\"" + BottomTabBarPage.BROWSE_MENU_TAB_CONTENT_DESCRIPTION + "\")");
+        wait.until(ExpectedConditions.elementToBeClickable(by)).click();
     }
 }

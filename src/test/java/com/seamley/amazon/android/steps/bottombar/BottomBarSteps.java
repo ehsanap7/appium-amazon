@@ -17,8 +17,6 @@ public final class BottomBarSteps {
 
     @Then("the bottom tab bar should show at least one icon on Android")
     public void bottomTabBarHasIcons() {
-        AndroidDriver driver = context.driver();
-        AndroidUtils.logAllElementsWithResourceId(driver, BottomTabBarPage.BOTTOM_TAB_ICON_RESOURCE_ID);
         int count = context.bottomTabBar().tabIcons().size();
         Assert.assertTrue(count >= 1, "expected at least one bottom tab icon, got: " + count);
     }
