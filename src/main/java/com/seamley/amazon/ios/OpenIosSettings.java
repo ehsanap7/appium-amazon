@@ -26,6 +26,9 @@ public final class OpenIosSettings {
     private static final String UPDATED_WDA_BUNDLE_ID = "com.seamley.amazon.WebDriverAgentRunner";
     private static final By ME_TAB = AppiumBy.iOSNsPredicateString("name == \"meTab\"");
     private static final By ORDERS = AppiumBy.iOSNsPredicateString("name == \"bac_yo\"");
+    /** Section header for Purchase history (from page source). Used to assert Orders screen loaded this block. */
+    private static final By PURCHASE_HISTORY = AppiumBy.iOSNsPredicateString(
+            "name == \"Purchase history\" AND label == \"Purchase history\" AND value == \"1\"");
 
     public static void main(String[] args) throws Exception {
         String appiumUrl = cfg("appium.serverUrl", DEFAULT_APPIUM_URL, "APPIUM_SERVER_URL");
@@ -73,6 +76,9 @@ public final class OpenIosSettings {
             System.out.println("Tapped meTab.");
             wait.until(ExpectedConditions.elementToBeClickable(ORDERS)).click();
             System.out.println("Tapped Orders");
+            // Assert Purchase history is on the page: wait until that node exists (fails with timeout if not).
+            wait.until(ExpectedConditions.presenceOfElementLocated(PURCHASE_HISTORY));
+            System.out.println("Assert OK: Purchase history is on the page.");
         } finally {
             if (driver != null) {
                 driver.quit();
