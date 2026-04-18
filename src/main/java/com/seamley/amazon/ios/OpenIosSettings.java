@@ -12,7 +12,8 @@ public final class OpenIosSettings {
 
     private static final String DEFAULT_APPIUM_URL = "http://127.0.0.1:4723/";
     private static final String DEFAULT_IOS_PLATFORM_VERSION = "26.4";
-    private static final String SETTINGS_BUNDLE = "com.apple.Preferences";
+    /** Amazon Shopping on iPhone (typical US App Store install); change if your store build uses another id. */
+    private static final String AMAZON_IOS_BUNDLE_ID = "com.amazon.Amazon";
 
     public static void main(String[] args) throws Exception {
         String appiumUrl = cfg("appium.serverUrl", DEFAULT_APPIUM_URL, "APPIUM_SERVER_URL");
@@ -20,7 +21,6 @@ public final class OpenIosSettings {
         String platformVersion = cfg("ios.platformVersion", DEFAULT_IOS_PLATFORM_VERSION, "IOS_PLATFORM_VERSION");
         String xcodeOrgId = cfg("ios.xcodeOrgId", "", "IOS_XCODE_ORG_ID", "TEAM_ID");
         String xcodeSigningId = cfg("ios.xcodeSigningId", "Apple Development", "IOS_XCODE_SIGNING_ID");
-        String updatedWdaBundleId = cfg("ios.updatedWdaBundleId", "", "IOS_UPDATED_WDA_BUNDLE_ID", "WDA_BUNDLE_ID");
 
         if (udid.isEmpty()) {
             throw new IllegalStateException("Missing UDID. Set env UDID or IOS_UDID, or -Dios.udid (IntelliJ → Run → Environment variables).");
@@ -29,22 +29,19 @@ public final class OpenIosSettings {
             throw new IllegalStateException(
                     "Missing Team ID. Set env IOS_XCODE_ORG_ID or TEAM_ID, or -Dios.xcodeOrgId.");
         }
-        if (updatedWdaBundleId.isEmpty()) {
-            throw new IllegalStateException(
-                    "Missing WebDriverAgent bundle id. Set env IOS_UPDATED_WDA_BUNDLE_ID or WDA_BUNDLE_ID, or -Dios.updatedWdaBundleId.");
-        }
 
         XCUITestOptions options = new XCUITestOptions()
                 .setPlatformName("iOS")
                 .setAutomationName("XCUITest")
                 .setUdid(udid)
                 .setPlatformVersion(platformVersion)
-                .setBundleId(SETTINGS_BUNDLE)
+                .setBundleId(AMAZON_IOS_BUNDLE_ID)
                 .setNoReset(true)
+                .setFullReset(false)
                 .setShowXcodeLog(true)
                 .setAllowProvisioningDeviceRegistration(true)
                 .setWdaLaunchTimeout(Duration.ofMinutes(5))
-                .setUpdatedWdaBundleId(updatedWdaBundleId);
+                .setUpdatedWdaBundleId(AMAZON_IOS_BUNDLE_ID);
 
         options.setXcodeCertificate(new XcodeCertificate(xcodeOrgId, xcodeSigningId));
         options.setCapability("xcodeOrgId", xcodeOrgId);
