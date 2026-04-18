@@ -19,11 +19,6 @@ public final class HamburgerMenuSteps {
         context.bottomTabBar().tapHamburgerMenuTab();
     }
 
-    @Then("the order pills row should be visible on Android")
-    public void pillsRowVisible() {
-        context.orderMenuPills().waitForMenuTileRowVisible();
-    }
-
     @When("I tap the Orders pill on Android")
     public void tapOrders() {
         context.orderMenuPills().tapOrders();

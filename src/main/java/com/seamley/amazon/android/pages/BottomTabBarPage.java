@@ -36,8 +36,9 @@ public class BottomTabBarPage extends AbstractAmazonPage {
     }
 
     public void tapHamburgerMenuTab() {
-        By by = AppiumBy.androidUIAutomator(
-                "new UiSelector().resourceId(\"" + BOTTOM_TAB_ICON_RESOURCE_ID + "\").description(\"" + BottomTabBarPage.BROWSE_MENU_TAB_CONTENT_DESCRIPTION + "\")");
+        By by = AppiumBy.xpath(
+                "(//android.widget.ImageView[@resource-id=\"com.amazon.mShop.android.shopping:id/bottom_tab_button_icon\"])[2]");
+        wait.until(ExpectedConditions.elementToBeClickable(by)).click();
         wait.until(ExpectedConditions.elementToBeClickable(by)).click();
     }
 }
