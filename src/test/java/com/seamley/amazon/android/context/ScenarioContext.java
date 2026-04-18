@@ -4,6 +4,7 @@ import com.seamley.amazon.android.factory.AmazonPageFactory;
 import com.seamley.amazon.android.pages.BottomTabBarPage;
 import com.seamley.amazon.android.pages.BrowseMenuPillsPage;
 import com.seamley.amazon.android.pages.OrdersRecentEmptyStatePage;
+import com.seamley.amazon.utils.AppiumUtils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -28,8 +29,8 @@ public final class ScenarioContext {
         if (driver != null) {
             return;
         }
-        String serverUrl = System.getProperty("appium.serverUrl", DEFAULT_APPIUM_SERVER_URL);
-        String udid = System.getProperty("appium.udid", DEFAULT_UDID);
+        String serverUrl = AppiumUtils.cfg("appium.serverUrl", DEFAULT_APPIUM_SERVER_URL, "APPIUM_SERVER_URL");
+        String udid = AppiumUtils.cfg("appium.udid", DEFAULT_UDID, "ANDROID_UDID", "UDID");
 
         UiAutomator2Options options = new UiAutomator2Options()
                 .setPlatformName("Android")

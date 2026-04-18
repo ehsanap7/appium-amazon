@@ -14,7 +14,7 @@ public final class AppSessionSteps {
         this.context = context;
     }
 
-    @Given("the Amazon shopping app is in the foreground")
+    @Given("the Amazon shopping app is in the foreground on Android")
     public void appInForeground() {
         context.bringAmazonToForeground();
         AndroidDriver driver = context.driver();
@@ -22,7 +22,7 @@ public final class AppSessionSteps {
         System.out.println("Activity: " + driver.currentActivity());
     }
 
-    @When("I wait for the home screen to settle")
+    @When("I wait for the home screen to settle on Android")
     public void waitForHome() throws InterruptedException {
         Thread.sleep(3000);
     }

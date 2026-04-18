@@ -1,10 +1,10 @@
-package com.seamley.amazon.android.steps.hooks;
+package com.seamley.amazon.ios.steps.hooks;
 
-import com.seamley.amazon.android.context.ScenarioContext;
+import com.seamley.amazon.ios.context.ScenarioContext;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 
 public final class LifecycleHooks {
 
@@ -14,12 +14,12 @@ public final class LifecycleHooks {
         this.context = context;
     }
 
-    @Before(value = "@android", order = 0)
-    public void startSession() throws MalformedURLException {
+    @Before(value = "@ios", order = 0)
+    public void startSession() throws IOException {
         context.startSession();
     }
 
-    @After(value = "@android", order = 10000)
+    @After(value = "@ios", order = 10000)
     public void endSession() {
         context.endSession();
     }

@@ -1,4 +1,4 @@
-package com.seamley.amazon.android.util;
+package com.seamley.amazon.utils;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -6,9 +6,10 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public final class ElementInspector {
+public final class AndroidUtils extends AppiumUtils {
 
-    private ElementInspector() {
+    private AndroidUtils() {
+        super();
     }
 
     public static void logAllElementsWithResourceId(AndroidDriver driver, String resourceId) {
@@ -97,13 +98,5 @@ public final class ElementInspector {
         }
         System.out.println("=== end ===");
         System.out.println();
-    }
-
-    private static boolean safeDisplayed(WebElement el) {
-        try {
-            return el.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
     }
 }

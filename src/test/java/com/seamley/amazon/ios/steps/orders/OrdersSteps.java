@@ -1,6 +1,6 @@
-package com.seamley.amazon.android.steps.orders;
+package com.seamley.amazon.ios.steps.orders;
 
-import com.seamley.amazon.android.context.ScenarioContext;
+import com.seamley.amazon.ios.context.ScenarioContext;
 import io.cucumber.java.en.Then;
 
 public final class OrdersSteps {
@@ -11,9 +11,8 @@ public final class OrdersSteps {
         this.context = context;
     }
 
-    @Then("I should see the no recent orders empty state on Android")
-    public void assertEmptyOrders() throws InterruptedException {
+    @Then("I should see the no recent orders empty state on iOS")
+    public void assertEmptyOrders() {
         context.ordersRecentEmptyState().assertNoRecentOrdersMessageVisible();
-        Thread.sleep(2000);
     }
 }

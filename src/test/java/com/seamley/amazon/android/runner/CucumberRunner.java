@@ -6,7 +6,8 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        features = {"classpath:features"},
+        features = {"classpath:features/amazon_browse_orders_android.feature"},
+        tags = "@android",
         glue = {
                 "com.seamley.amazon.android.steps.hooks",
                 "com.seamley.amazon.android.steps.session",
