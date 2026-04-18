@@ -9,10 +9,6 @@ import org.testng.Assert;
 
 import java.time.Duration;
 
-/**
- * Android scenario ends on empty-state copy; iOS matches {@link com.seamley.amazon.ios.OpenIosSettings}
- * (Purchase history section on Orders).
- */
 public class OrdersRecentEmptyStatePage extends AbstractIosAmazonPage {
 
     private static final Duration DEFAULT_WAIT = Duration.ofSeconds(30);

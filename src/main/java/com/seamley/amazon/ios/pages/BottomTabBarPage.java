@@ -9,10 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-/**
- * Mirrors Android step names; on iOS the “Browse menu” step maps to {@link AmazonIosSelectors#ME_TAB}
- * (same as {@link com.seamley.amazon.ios.OpenIosSettings}).
- */
 public class BottomTabBarPage extends AbstractIosAmazonPage {
 
     private static final Duration DEFAULT_WAIT = Duration.ofSeconds(25);
