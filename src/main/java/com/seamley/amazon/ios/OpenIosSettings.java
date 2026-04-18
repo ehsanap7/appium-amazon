@@ -1,9 +1,13 @@
 package com.seamley.amazon.ios;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.ios.options.wda.XcodeCertificate;
+import org.openqa.selenium.By;
 import org.openqa.selenium.SessionNotCreatedException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 import java.time.Duration;
@@ -12,8 +16,16 @@ public final class OpenIosSettings {
 
     private static final String DEFAULT_APPIUM_URL = "http://127.0.0.1:4723/";
     private static final String DEFAULT_IOS_PLATFORM_VERSION = "26.4";
-    /** Amazon Shopping on iPhone (typical US App Store install); change if your store build uses another id. */
+    /**
+     * Amazon Shopping on iPhone (typical US App Store install); change if your store build uses another id.
+     */
     private static final String AMAZON_IOS_BUNDLE_ID = "com.amazon.Amazon";
+    /**
+     * Your signed WebDriverAgentRunner bundle id from Xcode (must differ from {@link #AMAZON_IOS_BUNDLE_ID}).
+     */
+    private static final String UPDATED_WDA_BUNDLE_ID = "com.seamley.amazon.WebDriverAgentRunner";
+    private static final By ME_TAB = AppiumBy.iOSNsPredicateString("name == \"meTab\"");
+    private static final By ORDERS = AppiumBy.iOSNsPredicateString("name == \"bac_yo\"");
 
     public static void main(String[] args) throws Exception {
         String appiumUrl = cfg("appium.serverUrl", DEFAULT_APPIUM_URL, "APPIUM_SERVER_URL");
@@ -41,7 +53,7 @@ public final class OpenIosSettings {
                 .setShowXcodeLog(true)
                 .setAllowProvisioningDeviceRegistration(true)
                 .setWdaLaunchTimeout(Duration.ofMinutes(5))
-                .setUpdatedWdaBundleId(AMAZON_IOS_BUNDLE_ID);
+                .setUpdatedWdaBundleId(UPDATED_WDA_BUNDLE_ID);
 
         options.setXcodeCertificate(new XcodeCertificate(xcodeOrgId, xcodeSigningId));
         options.setCapability("xcodeOrgId", xcodeOrgId);
@@ -56,9 +68,11 @@ public final class OpenIosSettings {
                 throw e;
             }
             System.out.println("Session started.");
-            Thread.sleep(2000);
-            String src = driver.getPageSource();
-            System.out.println("Page source length: " + (src != null ? src.length() : 0));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+            wait.until(ExpectedConditions.elementToBeClickable(ME_TAB)).click();
+            System.out.println("Tapped meTab.");
+            wait.until(ExpectedConditions.elementToBeClickable(ORDERS)).click();
+            System.out.println("Tapped Orders");
         } finally {
             if (driver != null) {
                 driver.quit();
