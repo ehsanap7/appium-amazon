@@ -7,7 +7,13 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {"classpath:features"},
-        glue = {"com.seamley.amazon.android.steps"},
+        glue = {
+                "com.seamley.amazon.android.steps.hooks",
+                "com.seamley.amazon.android.steps.session",
+                "com.seamley.amazon.android.steps.bottombar",
+                "com.seamley.amazon.android.steps.browse",
+                "com.seamley.amazon.android.steps.orders"
+        },
         objectFactory = PicoFactory.class,
         plugin = {
                 "pretty",

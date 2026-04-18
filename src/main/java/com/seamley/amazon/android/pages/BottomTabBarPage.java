@@ -16,8 +16,8 @@ public class BottomTabBarPage extends AbstractAmazonPage {
             "com.amazon.mShop.android.shopping:id/bottom_tab_button_icon";
 
     public static final int TAB_INDEX_HOME = 0;
-    public static final int TAB_INDEX_SECOND = 1;
-    public static final int TAB_INDEX_THIRD = 2;
+    public static final int TAB_INDEX_PROFILE = 1;
+    public static final int TAB_INDEX_CART = 2;
     public static final int TAB_INDEX_BROWSE_MENU = 3;
     public static final int TAB_INDEX_AMAZON_RUFUS = 4;
 
@@ -60,11 +60,11 @@ public class BottomTabBarPage extends AbstractAmazonPage {
     }
 
     public void tapSecondTab() {
-        tapTabAtIndex(TAB_INDEX_SECOND);
+        tapTabAtIndex(TAB_INDEX_PROFILE);
     }
 
     public void tapThirdTab() {
-        tapTabAtIndex(TAB_INDEX_THIRD);
+        tapTabAtIndex(TAB_INDEX_CART);
     }
 
     public void tapBrowseMenuTab() {

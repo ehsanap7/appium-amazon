@@ -1,29 +1,22 @@
-package com.seamley.amazon.android.steps;
+package com.seamley.amazon.android.context;
 
 import com.seamley.amazon.android.factory.AmazonPageFactory;
 import com.seamley.amazon.android.pages.BottomTabBarPage;
 import com.seamley.amazon.android.pages.BrowseMenuPillsPage;
 import com.seamley.amazon.android.pages.OrdersRecentEmptyStatePage;
-import com.seamley.amazon.android.util.ElementInspector;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
-public final class BrowseOrdersSteps {
+public final class ScenarioContext {
 
     private static final String DEFAULT_APPIUM_SERVER_URL = "http://127.0.0.1:4723/";
     private static final String DEFAULT_UDID = "2A041JEGR05120";
-    private static final String APP_PACKAGE = "com.amazon.mShop.android.shopping";
+    public static final String APP_PACKAGE = "com.amazon.mShop.android.shopping";
     private static final String APP_ACTIVITY = "com.amazon.mShop.home.HomeActivity";
 
     private AndroidDriver driver;
@@ -31,10 +24,6 @@ public final class BrowseOrdersSteps {
     private BrowseMenuPillsPage browseMenuPills;
     private OrdersRecentEmptyStatePage ordersRecentEmptyState;
 
-    public BrowseOrdersSteps() {
-    }
-
-    @Before
     public void startSession() throws MalformedURLException {
         if (driver != null) {
             return;
@@ -59,7 +48,6 @@ public final class BrowseOrdersSteps {
         ordersRecentEmptyState = factory.ordersRecentEmptyState();
     }
 
-    @After
     public void endSession() {
         if (driver == null) {
             return;
@@ -74,55 +62,31 @@ public final class BrowseOrdersSteps {
         }
     }
 
-    @Given("the Amazon shopping app is in the foreground")
-    public void appInForeground() {
-        bringAmazonToForeground();
-        Assert.assertEquals(driver.getCurrentPackage(), APP_PACKAGE, "current package");
-        System.out.println("Activity: " + driver.currentActivity());
-    }
-
-    /** Session can start on launcher (noReset / IDE timing); bring Amazon up before assertions. */
-    private void bringAmazonToForeground() {
+    public void bringAmazonToForeground() {
+        if (driver == null) {
+            return;
+        }
         try {
             driver.activateApp(APP_PACKAGE);
         } catch (Exception ignored) {
         }
         new WebDriverWait(driver, Duration.ofSeconds(30))
-                .until(d -> APP_PACKAGE.equals(driver.getCurrentPackage()));
+                .until(d -> APP_PACKAGE.equals(((AndroidDriver) d).getCurrentPackage()));
     }
 
-    @When("I wait for the home screen to settle")
-    public void waitForHome() throws InterruptedException {
-        Thread.sleep(3000);
+    public AndroidDriver driver() {
+        return driver;
     }
 
-    @Then("the bottom tab bar should show at least one icon")
-    public void bottomTabBarHasIcons() {
-        ElementInspector.logAllElementsWithResourceId(driver, BottomTabBarPage.BOTTOM_TAB_ICON_RESOURCE_ID);
-        int count = bottomTabBar.tabIcons().size();
-        Assert.assertTrue(count >= 1, "expected at least one bottom tab icon, got: " + count);
+    public BottomTabBarPage bottomTabBar() {
+        return bottomTabBar;
     }
 
-    @When("I tap the Browse menu tab")
-    public void tapBrowseMenu() throws InterruptedException {
-        bottomTabBar.tapBrowseMenuTab();
-        Thread.sleep(1500);
+    public BrowseMenuPillsPage browseMenuPills() {
+        return browseMenuPills;
     }
 
-    @Then("the browse menu pills row should be visible")
-    public void pillsRowVisible() {
-        browseMenuPills.waitForMenuTileRowVisible();
-        ElementInspector.logImageMenuItemPillsUnderScrolledHamburgerView(driver);
-    }
-
-    @When("I tap the Orders pill")
-    public void tapOrders() {
-        browseMenuPills.tapOrders();
-    }
-
-    @Then("I should see the no recent orders empty state")
-    public void assertEmptyOrders() throws InterruptedException {
-        ordersRecentEmptyState.assertNoRecentOrdersMessageVisible();
-        Thread.sleep(2000);
+    public OrdersRecentEmptyStatePage ordersRecentEmptyState() {
+        return ordersRecentEmptyState;
     }
 }
