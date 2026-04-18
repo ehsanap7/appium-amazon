@@ -9,8 +9,4 @@ public abstract class AbstractAmazonPage {
     protected AbstractAmazonPage(AndroidDriver driver) {
         this.driver = driver;
     }
-
-    protected AndroidDriver driver() {
-        return driver;
-    }
 }
