@@ -1,7 +1,8 @@
 package com.seamley.amazon.ios.pages;
 
-import com.seamley.amazon.ios.AmazonIosSelectors;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,6 +14,9 @@ public class OrderPillsPage extends AbstractIosAmazonPage {
 
     private final WebDriverWait wait;
 
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"bac_yo\"")
+    private WebElement orders;
+
     public OrderPillsPage(IOSDriver driver) {
         this(driver, DEFAULT_WAIT);
     }
@@ -23,10 +27,10 @@ public class OrderPillsPage extends AbstractIosAmazonPage {
     }
 
     public void waitForMenuTileRowVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(AmazonIosSelectors.ORDERS));
+        wait.until(ExpectedConditions.elementToBeClickable(orders));
     }
 
     public void tapOrders() {
-        wait.until(ExpectedConditions.elementToBeClickable(AmazonIosSelectors.ORDERS)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(orders)).click();
     }
 }

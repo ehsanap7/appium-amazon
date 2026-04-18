@@ -1,7 +1,7 @@
 package com.seamley.amazon.ios.pages;
 
-import com.seamley.amazon.ios.AmazonIosSelectors;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,6 +15,10 @@ public class OrdersRecentEmptyStatePage extends AbstractIosAmazonPage {
 
     private final WebDriverWait wait;
 
+    @iOSXCUITFindBy(
+            iOSNsPredicate = "name == \"Purchase history\" AND label == \"Purchase history\" AND value == \"1\"")
+    private WebElement purchaseHistory;
+
     public OrdersRecentEmptyStatePage(IOSDriver driver) {
         this(driver, DEFAULT_WAIT);
     }
@@ -25,11 +29,11 @@ public class OrdersRecentEmptyStatePage extends AbstractIosAmazonPage {
     }
 
     public WebElement waitForPurchaseHistory() {
-        return wait.until(ExpectedConditions.presenceOfElementLocated(AmazonIosSelectors.PURCHASE_HISTORY));
+        return wait.until(ExpectedConditions.visibilityOf(purchaseHistory));
     }
 
     public void assertNoRecentOrdersMessageVisible() {
         WebElement el = waitForPurchaseHistory();
-        Assert.assertTrue(el.isDisplayed(), "Expected Purchase history section on Orders (OpenIosSettings parity)");
+        Assert.assertTrue(el.isDisplayed(), "Expected Purchase history section on Orders");
     }
 }

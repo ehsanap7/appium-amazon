@@ -1,7 +1,7 @@
 package com.seamley.amazon.ios.pages;
 
-import com.seamley.amazon.ios.AmazonIosSelectors;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,6 +15,9 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
 
     private final WebDriverWait wait;
 
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"meTab\"")
+    private WebElement meTab;
+
     public BottomTabBarPage(IOSDriver driver) {
         this(driver, DEFAULT_WAIT);
     }
@@ -25,11 +28,11 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
     }
 
     public List<WebElement> tabBarButtons() {
-        return driver.findElements(AmazonIosSelectors.ME_TAB);
+        wait.until(ExpectedConditions.visibilityOf(meTab));
+        return List.of(meTab);
     }
 
     public void tapProfileIcon() {
-        wait.until(ExpectedConditions.elementToBeClickable(AmazonIosSelectors.ME_TAB)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(AmazonIosSelectors.ME_TAB)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(meTab)).click();
     }
 }
