@@ -11,7 +11,7 @@ public final class OrdersSteps {
         this.context = context;
     }
 
-    @Then("I should see the no recent orders empty state on iOS")
+    @Then("I should see the purchase history on iOS")
     public void assertEmptyOrders() {
         context.ordersRecentEmptyState().assertNoRecentOrdersMessageVisible();
     }

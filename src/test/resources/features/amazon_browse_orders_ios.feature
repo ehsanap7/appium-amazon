@@ -7,4 +7,4 @@ Feature: Browse menu and Orders (iOS)
     When I tap the Profile icon on iOS
     Then the order pills row should be visible on iOS
     When I tap the Orders pill on iOS
-    Then I should see the no recent orders empty state on iOS
+    Then I should see the purchase history on iOS
