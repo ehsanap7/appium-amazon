@@ -9,12 +9,8 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
-/**
- * iOS session and diagnostics aligned with {@code OpenIosSettings} (XCUITest + {@code local.properties}).
- */
 public final class IosUtils extends AppiumUtils {
 
-    public static final String PROPERTIES_FILE = AppiumUtils.LOCAL_PROPERTIES_RESOURCE;
     public static final String DEFAULT_APPIUM_URL = "http://127.0.0.1:4723/";
     public static final String DEFAULT_IOS_PLATFORM_VERSION = "26.4";
     public static final String AMAZON_IOS_BUNDLE_ID = "com.amazon.Amazon";
@@ -51,7 +47,7 @@ public final class IosUtils extends AppiumUtils {
      * Same capability recipe as {@code OpenIosSettings}: XCUITest, Amazon bundle, WDA signing, no reset.
      */
     public static XCUITestOptions buildAmazonSessionOptions(Properties props) {
-        String udid = requireProp(props, "UDID", "ios.udid");
+        String udid = requireProp(props, "IOS_UDID", "ios.udid");
         String xcodeOrgId = requireProp(props, "IOS_XCODE_ORG_ID", "ios.xcodeOrgId");
         String platformVersion = firstNonBlank(
                 props.getProperty("IOS_PLATFORM_VERSION"),

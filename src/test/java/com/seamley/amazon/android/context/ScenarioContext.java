@@ -32,7 +32,6 @@ public final class ScenarioContext {
         }
         Properties local = AppiumUtils.loadLocalProperties();
         String serverUrl = AppiumUtils.cfg("appium.serverUrl", DEFAULT_APPIUM_SERVER_URL, "APPIUM_SERVER_URL");
-        // -Dappium.udid / env ANDROID_UDID or UDID override; else local.properties ANDROID_UDID=…; else default.
         String udid = AppiumUtils.firstNonBlank(
                 AppiumUtils.cfg("appium.udid", "", "ANDROID_UDID", "UDID"),
                 local.getProperty("ANDROID_UDID"),
