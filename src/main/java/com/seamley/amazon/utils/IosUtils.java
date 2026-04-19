@@ -17,12 +17,12 @@ public final class IosUtils extends AppiumUtils {
         super();
     }
 
-    public static XCUITestOptions buildAmazonSessionOptions(Properties props) {
-        String udid = need(props, "IOS_UDID");
-        String xcodeOrgId = need(props, "IOS_XCODE_ORG_ID");
-        String platformVersion = need(props, "IOS_PLATFORM_VERSION");
-        String wdaBundleId = need(props, "IOS_UPDATED_WDA_BUNDLE_ID");
-        String signingId = need(props, "IOS_XCODE_SIGNING_ID");
+    public static XCUITestOptions buildAmazonSessionOptions() {
+        String udid = need("IOS_UDID");
+        String xcodeOrgId = need("IOS_XCODE_ORG_ID");
+        String platformVersion = need("IOS_PLATFORM_VERSION");
+        String wdaBundleId = need("IOS_UPDATED_WDA_BUNDLE_ID");
+        String signingId = need("IOS_XCODE_SIGNING_ID");
 
         XCUITestOptions options = new XCUITestOptions()
                 .setPlatformName("iOS")

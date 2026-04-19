@@ -4,22 +4,21 @@ import com.seamley.amazon.android.factory.AmazonPageFactory;
 import com.seamley.amazon.android.pages.BottomTabBarPage;
 import com.seamley.amazon.android.pages.OrderPillsPage;
 import com.seamley.amazon.android.pages.OrdersRecentEmptyStatePage;
+import com.seamley.amazon.utils.AndroidUtils;
 import com.seamley.amazon.utils.AppiumUtils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 
 public final class ScenarioContext {
 
-    private static final String DEFAULT_APPIUM_SERVER_URL = "http://127.0.0.1:4723/";
-    private static final String DEFAULT_UDID = "2A041JEGR05120";
-    public static final String APP_PACKAGE = "com.amazon.mShop.android.shopping";
-    private static final String APP_ACTIVITY = "com.amazon.mShop.home.HomeActivity";
+    public static final String APP_PACKAGE = AndroidUtils.AMAZON_APP_PACKAGE;
 
     private AndroidDriver driver;
     private BottomTabBarPage bottomTabBar;
@@ -30,23 +29,13 @@ public final class ScenarioContext {
         if (driver != null) {
             return;
         }
-        Properties local = AppiumUtils.loadLocalProperties();
-        String serverUrl = AppiumUtils.cfg("appium.serverUrl", DEFAULT_APPIUM_SERVER_URL, "APPIUM_SERVER_URL");
-        String udid = AppiumUtils.firstNonBlank(
-                AppiumUtils.cfg("appium.udid", "", "ANDROID_UDID", "UDID"),
-                local.getProperty("ANDROID_UDID"),
-                DEFAULT_UDID);
-
-        UiAutomator2Options options = new UiAutomator2Options()
-                .setPlatformName("Android")
-                .setAutomationName("UiAutomator2")
-                .setUdid(udid)
-                .setAppPackage(APP_PACKAGE)
-                .setAppActivity(APP_ACTIVITY)
-                .setNoReset(true)
-                .setFullReset(false);
-
-        driver = new AndroidDriver(new URL(serverUrl), options);
+        String appiumUrl = AppiumUtils.resolveAppiumServerUrl();
+        UiAutomator2Options options = AndroidUtils.buildAmazonSessionOptions();
+        try {
+            driver = AndroidUtils.newAmazonSessionOrThrow(new URL(appiumUrl), options);
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException("Invalid Appium URL: " + appiumUrl, e);
+        }
         bringAmazonToForeground();
         AmazonPageFactory factory = AmazonPageFactory.create(driver);
         bottomTabBar = factory.bottomTabBar();

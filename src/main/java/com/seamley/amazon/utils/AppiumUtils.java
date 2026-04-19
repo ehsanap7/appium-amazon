@@ -7,64 +7,39 @@ import java.util.Properties;
 public abstract class AppiumUtils {
 
     public static final String LOCAL_PROPERTIES_RESOURCE = "local.properties";
+    public static final Properties LOCAL_PROPERTIES;
+
+    static {
+        try {
+            LOCAL_PROPERTIES = loadLocalProperties();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     protected AppiumUtils() {
     }
 
-    public static Properties loadLocalProperties() throws IOException {
-        return loadClasspathProperties(AppiumUtils.class, LOCAL_PROPERTIES_RESOURCE);
-    }
-
-    public static Properties loadClasspathProperties(Class<?> anchor, String file) throws IOException {
-        Properties props = new Properties();
-        try (InputStream in = anchor.getClassLoader().getResourceAsStream(file)) {
-            if (in == null) {
-                throw new IllegalStateException("Classpath resource not found: " + file);
-            }
-            props.load(in);
-        }
-        return props;
-    }
-
-    public static String cfg(String propKey, String fallback, String... envKeys) {
-        String fromProp = System.getProperty(propKey);
-        if (fromProp != null && !fromProp.isBlank()) {
-            return fromProp.trim();
-        }
-        for (String k : envKeys) {
-            String v = System.getenv(k);
-            if (v != null && !v.isBlank()) {
-                return v.trim();
-            }
-        }
-        if (fallback != null && !fallback.isBlank()) {
-            return fallback.trim();
-        }
-        return "";
-    }
-
-    public static String firstNonBlank(String... values) {
-        for (String v : values) {
-            if (v != null && !v.isBlank()) {
-                return v.trim();
-            }
-        }
-        return "";
-    }
-
-    public static String need(Properties props, String key) {
-        String v = props.getProperty(key);
+    public static String need(String key) {
+        String v = LOCAL_PROPERTIES.getProperty(key);
         if (v == null || v.isBlank()) {
             throw new IllegalStateException("Missing '" + key + "' in local.properties.");
         }
         return v.trim();
     }
 
-    public static Properties loadAmazonLocalProperties() throws IOException {
-        return loadLocalProperties();
+    public static Properties loadLocalProperties() throws IOException {
+        Properties props = new Properties();
+        try (InputStream in = AppiumUtils.class.getClassLoader().getResourceAsStream(LOCAL_PROPERTIES_RESOURCE)) {
+            if (in == null) {
+                throw new IllegalStateException("Classpath resource not found: " + LOCAL_PROPERTIES_RESOURCE);
+            }
+            props.load(in);
+        }
+        return props;
     }
 
-    public static String resolveAppiumServerUrl(Properties props) {
-        return need(props, "APPIUM_SERVER_URL");
+    public static String resolveAppiumServerUrl() {
+        return need("APPIUM_SERVER_URL");
     }
 }

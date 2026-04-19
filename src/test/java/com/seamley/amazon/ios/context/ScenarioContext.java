@@ -4,6 +4,7 @@ import com.seamley.amazon.ios.factory.IosAmazonPageFactory;
 import com.seamley.amazon.ios.pages.BottomTabBarPage;
 import com.seamley.amazon.ios.pages.OrderPillsPage;
 import com.seamley.amazon.ios.pages.OrdersRecentEmptyStatePage;
+import com.seamley.amazon.utils.AppiumUtils;
 import com.seamley.amazon.utils.IosUtils;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;
@@ -30,9 +31,9 @@ public final class ScenarioContext {
         if (driver != null) {
             return;
         }
-        Properties props = IosUtils.loadAmazonLocalProperties();
-        String appiumUrl = IosUtils.resolveAppiumServerUrl(props);
-        XCUITestOptions options = IosUtils.buildAmazonSessionOptions(props);
+        Properties props = AppiumUtils.loadLocalProperties();
+        String appiumUrl = AppiumUtils.resolveAppiumServerUrl();
+        XCUITestOptions options = IosUtils.buildAmazonSessionOptions();
         try {
             driver = IosUtils.newAmazonSessionOrThrow(new URL(appiumUrl), options);
         } catch (MalformedURLException e) {
