@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.seamley</groupId>
+    <groupId>com.amazon</groupId>
     <artifactId>appium-amazon</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -100,7 +100,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
-                    <mainClass>com.seamley.amazon.ios.OpenIosSettings</mainClass>
+                    <mainClass>com.amazon.ios.OpenIosSettings</mainClass>
                 </configuration>
             </plugin>
         </plugins>
