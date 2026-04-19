@@ -51,4 +51,20 @@ public abstract class AppiumUtils {
         }
         return "";
     }
+
+    public static String need(Properties props, String key) {
+        String v = props.getProperty(key);
+        if (v == null || v.isBlank()) {
+            throw new IllegalStateException("Missing '" + key + "' in local.properties.");
+        }
+        return v.trim();
+    }
+
+    public static Properties loadAmazonLocalProperties() throws IOException {
+        return loadLocalProperties();
+    }
+
+    public static String resolveAppiumServerUrl(Properties props) {
+        return need(props, "APPIUM_SERVER_URL");
+    }
 }
