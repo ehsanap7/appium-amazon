@@ -3,12 +3,12 @@
 <suite name="amazon-mobile" verbose="1" parallel="false">
     <test name="cucumber-android">
         <classes>
-            <class name="com.seamley.amazon.android.runner.CucumberRunner"/>
+            <class name="com.amazon.android.runner.CucumberRunner"/>
         </classes>
     </test>
     <test name="cucumber-ios">
         <classes>
-            <class name="com.seamley.amazon.ios.runner.CucumberRunner"/>
+            <class name="com.amazon.ios.runner.CucumberRunner"/>
         </classes>
     </test>
 </suite>
