@@ -4,6 +4,8 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.ios.options.wda.XcodeCertificate;
 import org.openqa.selenium.SessionNotCreatedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -14,8 +16,8 @@ public final class IosUtils extends AppiumUtils {
     public static final String DEFAULT_APPIUM_URL = "http://127.0.0.1:4723/";
     public static final String DEFAULT_IOS_PLATFORM_VERSION = "26.4";
     public static final String AMAZON_IOS_BUNDLE_ID = "com.amazon.Amazon";
-    public static final String DEFAULT_UPDATED_WDA_BUNDLE_ID = "com.seamley.amazon.WebDriverAgentRunner";
     public static final String DEFAULT_XCODE_SIGNING_ID = "Apple Development";
+    public static final String WDA_BUNDLE_ID = "com.apple.Preferences";
 
     private IosUtils() {
         super();
@@ -52,13 +54,6 @@ public final class IosUtils extends AppiumUtils {
         String platformVersion = firstNonBlank(
                 props.getProperty("IOS_PLATFORM_VERSION"),
                 cfg("ios.platformVersion", DEFAULT_IOS_PLATFORM_VERSION, "IOS_PLATFORM_VERSION"));
-        String wdaBundleId = firstNonBlank(
-                props.getProperty("IOS_UPDATED_WDA_BUNDLE_ID"),
-                cfg("ios.updatedWdaBundleId", "", "IOS_UPDATED_WDA_BUNDLE_ID"),
-                DEFAULT_UPDATED_WDA_BUNDLE_ID);
-        String signingId = firstNonBlank(
-                props.getProperty("IOS_XCODE_SIGNING_ID"),
-                cfg("ios.xcodeSigningId", DEFAULT_XCODE_SIGNING_ID, "IOS_XCODE_SIGNING_ID"));
 
         XCUITestOptions options = new XCUITestOptions()
                 .setPlatformName("iOS")
@@ -71,11 +66,11 @@ public final class IosUtils extends AppiumUtils {
                 .setShowXcodeLog(true)
                 .setAllowProvisioningDeviceRegistration(true)
                 .setWdaLaunchTimeout(Duration.ofMinutes(5))
-                .setUpdatedWdaBundleId(wdaBundleId);
+                .setUpdatedWdaBundleId(WDA_BUNDLE_ID);
 
-        options.setXcodeCertificate(new XcodeCertificate(xcodeOrgId, signingId));
+        options.setXcodeCertificate(new XcodeCertificate(xcodeOrgId, DEFAULT_XCODE_SIGNING_ID));
         options.setCapability("xcodeOrgId", xcodeOrgId);
-        options.setCapability("xcodeSigningId", signingId);
+        options.setCapability("xcodeSigningId", DEFAULT_XCODE_SIGNING_ID);
         return options;
     }
 
