@@ -28,6 +28,7 @@ public final class LifecycleHooks {
 
     @After(value = "@ios", order = 10_000)
     public void endSession() {
+        context.driver().terminateApp(ScenarioContext.AMAZON_BUNDLE_ID);
         context.endSession();
     }
 }

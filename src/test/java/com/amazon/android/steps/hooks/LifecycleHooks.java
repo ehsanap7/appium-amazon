@@ -3,6 +3,7 @@ package com.amazon.android.steps.hooks;
 import com.amazon.android.context.ScenarioContext;
 import com.amazon.support.CucumberTeardownAllure;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 
@@ -28,6 +29,8 @@ public final class LifecycleHooks {
 
     @After(value = "@android", order = 10_000)
     public void endSession() {
+        context.driver().terminateApp(ScenarioContext.APP_PACKAGE);
         context.endSession();
     }
+
 }
