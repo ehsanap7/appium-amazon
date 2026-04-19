@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public final class IosUtils extends AppiumUtils {
 
-    public static final String PROPERTIES_FILE = "local.properties";
+    public static final String PROPERTIES_FILE = AppiumUtils.LOCAL_PROPERTIES_RESOURCE;
     public static final String DEFAULT_APPIUM_URL = "http://127.0.0.1:4723/";
     public static final String DEFAULT_IOS_PLATFORM_VERSION = "26.4";
     public static final String AMAZON_IOS_BUNDLE_ID = "com.amazon.Amazon";
@@ -26,7 +26,7 @@ public final class IosUtils extends AppiumUtils {
     }
 
     public static Properties loadAmazonLocalProperties() throws IOException {
-        return loadClasspathProperties(IosUtils.class, PROPERTIES_FILE);
+        return loadLocalProperties();
     }
 
     public static String resolveAppiumServerUrl(Properties props) {

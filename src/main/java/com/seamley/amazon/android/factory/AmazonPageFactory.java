@@ -28,23 +28,11 @@ public final class AmazonPageFactory {
         return new BottomTabBarPage(driver);
     }
 
-    public BottomTabBarPage bottomTabBar(Duration waitTimeout) {
-        return new BottomTabBarPage(driver, waitTimeout);
-    }
-
     public OrderPillsPage orderPills() {
         return new OrderPillsPage(driver);
     }
 
-    public OrderPillsPage orderPills(Duration waitTimeout) {
-        return new OrderPillsPage(driver, waitTimeout);
-    }
-
     public OrdersRecentEmptyStatePage ordersRecentEmptyState() {
         return new OrdersRecentEmptyStatePage(driver);
-    }
-
-    public OrdersRecentEmptyStatePage ordersRecentEmptyState(Duration waitTimeout) {
-        return new OrdersRecentEmptyStatePage(driver, waitTimeout);
     }
 }

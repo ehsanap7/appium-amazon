@@ -11,7 +11,15 @@ import java.util.Properties;
  */
 public abstract class AppiumUtils {
 
+    /** Classpath resource for machine-local Appium / device settings (same file iOS uses). */
+    public static final String LOCAL_PROPERTIES_RESOURCE = "local.properties";
+
     protected AppiumUtils() {
+    }
+
+    /** Loads {@value #LOCAL_PROPERTIES_RESOURCE} from the classpath (typically {@code src/main/resources}). */
+    public static Properties loadLocalProperties() throws IOException {
+        return loadClasspathProperties(AppiumUtils.class, LOCAL_PROPERTIES_RESOURCE);
     }
 
     public static Properties loadClasspathProperties(Class<?> anchor, String file) throws IOException {

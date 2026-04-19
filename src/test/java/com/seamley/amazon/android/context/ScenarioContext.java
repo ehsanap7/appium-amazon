@@ -9,9 +9,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Properties;
 
 public final class ScenarioContext {
 
@@ -25,12 +26,17 @@ public final class ScenarioContext {
     private OrderPillsPage orderPills;
     private OrdersRecentEmptyStatePage ordersRecentEmptyState;
 
-    public void startSession() throws MalformedURLException {
+    public void startSession() throws IOException {
         if (driver != null) {
             return;
         }
+        Properties local = AppiumUtils.loadLocalProperties();
         String serverUrl = AppiumUtils.cfg("appium.serverUrl", DEFAULT_APPIUM_SERVER_URL, "APPIUM_SERVER_URL");
-        String udid = AppiumUtils.cfg("appium.udid", DEFAULT_UDID, "ANDROID_UDID", "UDID");
+        // -Dappium.udid / env ANDROID_UDID or UDID override; else local.properties ANDROID_UDID=…; else default.
+        String udid = AppiumUtils.firstNonBlank(
+                AppiumUtils.cfg("appium.udid", "", "ANDROID_UDID", "UDID"),
+                local.getProperty("ANDROID_UDID"),
+                DEFAULT_UDID);
 
         UiAutomator2Options options = new UiAutomator2Options()
                 .setPlatformName("Android")

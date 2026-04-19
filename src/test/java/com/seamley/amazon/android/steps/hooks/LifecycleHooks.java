@@ -6,7 +6,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 
 public final class LifecycleHooks {
 
@@ -17,7 +17,7 @@ public final class LifecycleHooks {
     }
 
     @Before(value = "@android", order = 0)
-    public void startSession() throws MalformedURLException {
+    public void startSession() throws IOException {
         context.startSession();
     }
 
