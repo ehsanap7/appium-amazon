@@ -17,9 +17,6 @@ public abstract class AppiumUtils {
         }
     }
 
-    protected AppiumUtils() {
-    }
-
     public static String need(String key) {
         String v = LOCAL_PROPERTIES.getProperty(key);
         if (v == null || v.isBlank()) {
