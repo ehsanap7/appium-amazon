@@ -1,8 +1,10 @@
 package com.seamley.amazon.ios.steps.hooks;
 
 import com.seamley.amazon.ios.context.ScenarioContext;
+import com.seamley.amazon.support.CucumberTeardownAllure;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 
 import java.io.IOException;
 
@@ -19,7 +21,12 @@ public final class LifecycleHooks {
         context.startSession();
     }
 
-    @After(value = "@ios", order = 10000)
+    @After(value = "@ios", order = 50_000)
+    public void teardownAllureAttachments(Scenario scenario) {
+        CucumberTeardownAllure.runTeardownAttachments(scenario, context.driver(), "ios");
+    }
+
+    @After(value = "@ios", order = 10_000)
     public void endSession() {
         context.endSession();
     }

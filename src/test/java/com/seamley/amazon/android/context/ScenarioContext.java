@@ -3,7 +3,6 @@ package com.seamley.amazon.android.context;
 import com.seamley.amazon.android.factory.AmazonPageFactory;
 import com.seamley.amazon.android.pages.BottomTabBarPage;
 import com.seamley.amazon.android.pages.OrderPillsPage;
-import com.seamley.amazon.android.pages.OrderPillsPage;
 import com.seamley.amazon.android.pages.OrdersRecentEmptyStatePage;
 import com.seamley.amazon.utils.AppiumUtils;
 import io.appium.java_client.android.AndroidDriver;
