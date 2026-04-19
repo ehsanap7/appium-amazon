@@ -1,8 +1,6 @@
 package com.amazon.android.steps.bottombar;
 
 import com.amazon.android.context.ScenarioContext;
-import com.amazon.android.pages.BottomTabBarPage;
-import com.amazon.utils.AndroidUtils;
 import io.appium.java_client.android.AndroidDriver;
 import io.cucumber.java.en.Then;
 import org.testng.Assert;
@@ -18,6 +16,7 @@ public final class BottomBarSteps {
     @Then("the bottom tab bar should show at least one icon on Android")
     public void bottomTabBarHasIcons() {
         int count = context.bottomTabBar().tabIcons().size();
+        System.out.println("Bottom tab bar icon count: " + count);
         Assert.assertTrue(count >= 1, "expected at least one bottom tab icon, got: " + count);
     }
 }
