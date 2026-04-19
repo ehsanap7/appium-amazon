@@ -34,7 +34,6 @@ public class BottomTabBarPage extends AbstractAmazonPage {
         return tabIcons;
     }
 
-
     public void tapHamburgerMenuTab() {
         wait.until(ExpectedConditions.elementToBeClickable(meTab)).click();
     }

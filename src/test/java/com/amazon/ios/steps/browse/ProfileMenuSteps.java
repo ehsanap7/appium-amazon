@@ -19,11 +19,11 @@ public final class ProfileMenuSteps {
 
     @Then("the order pills row should be visible on iOS")
     public void orderPillsRowVisible() {
-        context.browseMenuPills().waitForMenuTileRowVisible();
+        context.getOrderPills().waitForOrderTabVisible();
     }
 
     @When("I tap the Orders pill on iOS")
     public void tapOrders() {
-        context.browseMenuPills().tapOrders();
+        context.getOrderPills().tapOrders();
     }
 }

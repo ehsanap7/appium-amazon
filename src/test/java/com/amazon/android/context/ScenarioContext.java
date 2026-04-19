@@ -74,7 +74,7 @@ public final class ScenarioContext {
         return bottomTabBar;
     }
 
-    public OrderPillsPage orderMenuPills() {
+    public OrderPillsPage getOrderPills() {
         return orderPills;
     }
 

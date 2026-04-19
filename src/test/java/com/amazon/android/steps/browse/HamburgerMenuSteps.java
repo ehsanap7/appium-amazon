@@ -19,8 +19,13 @@ public final class HamburgerMenuSteps {
         context.bottomTabBar().tapHamburgerMenuTab();
     }
 
+    @Then("the order pills row should be visible on Android")
+    public void orderPillsRowVisible() {
+        context.getOrderPills().waitForOrderTabVisible();
+    }
+
     @When("I tap the Orders pill on Android")
     public void tapOrders() {
-        context.orderMenuPills().tapOrders();
+        context.getOrderPills().tapOrders();
     }
 }

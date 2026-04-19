@@ -10,15 +10,13 @@ import java.time.Duration;
 
 public class OrderPillsPage extends AbstractIosAmazonPage {
 
-    private static final Duration DEFAULT_WAIT = Duration.ofSeconds(25);
-
     private final WebDriverWait wait;
 
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"bac_yo\"")
     private WebElement orders;
 
     public OrderPillsPage(IOSDriver driver) {
-        this(driver, DEFAULT_WAIT);
+        this(driver, Duration.ofSeconds(25));
     }
 
     public OrderPillsPage(IOSDriver driver, Duration timeout) {
@@ -26,7 +24,7 @@ public class OrderPillsPage extends AbstractIosAmazonPage {
         this.wait = new WebDriverWait(driver, timeout);
     }
 
-    public void waitForMenuTileRowVisible() {
+    public void waitForOrderTabVisible() {
         wait.until(ExpectedConditions.elementToBeClickable(orders));
     }
 
