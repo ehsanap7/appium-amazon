@@ -5,16 +5,13 @@ import com.seamley.amazon.android.pages.BottomTabBarPage;
 import com.seamley.amazon.android.pages.OrderPillsPage;
 import com.seamley.amazon.android.pages.OrdersRecentEmptyStatePage;
 import com.seamley.amazon.utils.AndroidUtils;
-import com.seamley.amazon.utils.AppiumUtils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.Duration;
-import java.util.Properties;
 
 public final class ScenarioContext {
 
@@ -29,12 +26,12 @@ public final class ScenarioContext {
         if (driver != null) {
             return;
         }
-        String appiumUrl = AppiumUtils.resolveAppiumServerUrl();
+
         UiAutomator2Options options = AndroidUtils.buildAmazonSessionOptions();
         try {
-            driver = AndroidUtils.newAmazonSessionOrThrow(new URL(appiumUrl), options);
+            driver = AndroidUtils.newAmazonSessionOrThrow(options);
         } catch (MalformedURLException e) {
-            throw new IllegalStateException("Invalid Appium URL: " + appiumUrl, e);
+            throw new IllegalStateException("Invalid Appium URL", e);
         }
         bringAmazonToForeground();
         AmazonPageFactory factory = AmazonPageFactory.create(driver);

@@ -1,9 +1,8 @@
 package com.seamley.amazon.ios.runner;
 
+import com.seamley.amazon.support.BaseCucumberRunner;
 import io.cucumber.picocontainer.PicoFactory;
-import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
-import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {"classpath:features/amazon_browse_orders_ios.feature"},
@@ -24,11 +23,5 @@ import org.testng.annotations.DataProvider;
         },
         monochrome = true
 )
-public class CucumberRunner extends AbstractTestNGCucumberTests {
-
-    @Override
-    @DataProvider(parallel = false)
-    public Object[][] scenarios() {
-        return super.scenarios();
-    }
+public class CucumberRunner extends BaseCucumberRunner {
 }

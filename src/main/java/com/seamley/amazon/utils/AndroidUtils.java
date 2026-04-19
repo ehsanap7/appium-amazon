@@ -3,9 +3,8 @@ package com.seamley.amazon.utils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Properties;
 
 public final class AndroidUtils extends AppiumUtils {
 
@@ -28,7 +27,8 @@ public final class AndroidUtils extends AppiumUtils {
                 .setFullReset(false);
     }
 
-    public static AndroidDriver newAmazonSessionOrThrow(URL appiumUrl, UiAutomator2Options options) {
-        return new AndroidDriver(appiumUrl, options);
+    public static AndroidDriver newAmazonSessionOrThrow(UiAutomator2Options options) throws MalformedURLException {
+        String appiumUrl = AppiumUtils.resolveAppiumServerUrl();
+        return new AndroidDriver(new URL(appiumUrl), options);
     }
 }

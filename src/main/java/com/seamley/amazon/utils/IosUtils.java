@@ -6,12 +6,17 @@ import io.appium.java_client.ios.options.wda.XcodeCertificate;
 import org.openqa.selenium.SessionNotCreatedException;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 
 public final class IosUtils extends AppiumUtils {
 
     public static final String AMAZON_IOS_BUNDLE_ID = "com.amazon.Amazon";
+    public static final String IOS_UPDATED_WDA_BUNDLE_ID = "com.apple.Preferences";
+    public static final String IOS_XCODE_SIGNING_ID = "Apple Development";
+
 
     private IosUtils() {
         super();
@@ -21,8 +26,6 @@ public final class IosUtils extends AppiumUtils {
         String udid = need("IOS_UDID");
         String xcodeOrgId = need("IOS_XCODE_ORG_ID");
         String platformVersion = need("IOS_PLATFORM_VERSION");
-        String wdaBundleId = need("IOS_UPDATED_WDA_BUNDLE_ID");
-        String signingId = need("IOS_XCODE_SIGNING_ID");
 
         XCUITestOptions options = new XCUITestOptions()
                 .setPlatformName("iOS")
@@ -35,17 +38,18 @@ public final class IosUtils extends AppiumUtils {
                 .setShowXcodeLog(true)
                 .setAllowProvisioningDeviceRegistration(true)
                 .setWdaLaunchTimeout(Duration.ofMinutes(5))
-                .setUpdatedWdaBundleId(wdaBundleId);
+                .setUpdatedWdaBundleId(IOS_UPDATED_WDA_BUNDLE_ID);
 
-        options.setXcodeCertificate(new XcodeCertificate(xcodeOrgId, signingId));
+        options.setXcodeCertificate(new XcodeCertificate(xcodeOrgId, IOS_XCODE_SIGNING_ID));
         options.setCapability("xcodeOrgId", xcodeOrgId);
-        options.setCapability("xcodeSigningId", signingId);
+        options.setCapability("xcodeSigningId", IOS_XCODE_SIGNING_ID);
         return options;
     }
 
-    public static IOSDriver newAmazonSessionOrThrow(java.net.URL appiumUrl, XCUITestOptions options) {
+    public static IOSDriver newAmazonSessionOrThrow(XCUITestOptions options) throws MalformedURLException {
         try {
-            return new IOSDriver(appiumUrl, options);
+            String appiumUrl = AppiumUtils.resolveAppiumServerUrl();
+            return new IOSDriver(new URL(appiumUrl), options);
         } catch (SessionNotCreatedException e) {
             printSessionFailureHelp(e);
             throw e;

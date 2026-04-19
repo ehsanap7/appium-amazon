@@ -31,13 +31,11 @@ public final class ScenarioContext {
         if (driver != null) {
             return;
         }
-        Properties props = AppiumUtils.loadLocalProperties();
-        String appiumUrl = AppiumUtils.resolveAppiumServerUrl();
         XCUITestOptions options = IosUtils.buildAmazonSessionOptions();
         try {
-            driver = IosUtils.newAmazonSessionOrThrow(new URL(appiumUrl), options);
+            driver = IosUtils.newAmazonSessionOrThrow(options);
         } catch (MalformedURLException e) {
-            throw new IllegalStateException("Invalid Appium URL: " + appiumUrl, e);
+            throw new IllegalStateException("Invalid Appium URL" + e);
         }
         bringAmazonToForeground();
         IosAmazonPageFactory factory = IosAmazonPageFactory.create(driver);

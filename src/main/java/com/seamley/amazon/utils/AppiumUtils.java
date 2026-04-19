@@ -8,6 +8,7 @@ public abstract class AppiumUtils {
 
     public static final String LOCAL_PROPERTIES_RESOURCE = "local.properties";
     public static final Properties LOCAL_PROPERTIES;
+    private static volatile String appiumServerUrlOverride;
 
     static {
         try {
@@ -36,7 +37,18 @@ public abstract class AppiumUtils {
         return props;
     }
 
+    public static void setAppiumServerUrlOverride(String url) {
+        appiumServerUrlOverride = url.trim();
+    }
+
+    public static void clearAppiumServerUrlOverride() {
+        appiumServerUrlOverride = null;
+    }
+
     public static String resolveAppiumServerUrl() {
+        if (appiumServerUrlOverride != null && !appiumServerUrlOverride.isBlank()) {
+            return appiumServerUrlOverride;
+        }
         return need("APPIUM_SERVER_URL");
     }
 }
