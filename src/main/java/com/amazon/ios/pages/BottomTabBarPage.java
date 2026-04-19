@@ -18,6 +18,10 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"meTab\"")
     private WebElement meTab;
 
+    @iOSXCUITFindBy(iOSNsPredicate = "name == 'home' OR name == 'meTab' OR name == 'cartTab' OR name == 'menuTab'")
+    private List<WebElement> tabIcons;
+
+
     public BottomTabBarPage(IOSDriver driver) {
         this(driver, DEFAULT_WAIT);
     }
@@ -27,9 +31,8 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
         this.wait = new WebDriverWait(driver, timeout);
     }
 
-    public List<WebElement> tabBarButtons() {
-        wait.until(ExpectedConditions.visibilityOf(meTab));
-        return List.of(meTab);
+    public List<WebElement> tabIcons() {
+        return tabIcons;
     }
 
     public void tapProfileIcon() {
