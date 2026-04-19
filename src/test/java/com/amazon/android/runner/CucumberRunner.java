@@ -5,14 +5,10 @@ import io.cucumber.picocontainer.PicoFactory;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-        features = {"classpath:features/amazon_browse_orders_android.feature"},
+        features = {"classpath:features/android/amazon_browse_orders_android.feature"},
         tags = "@android",
         glue = {
-                "com.amazon.android.steps.hooks",
-                "com.amazon.android.steps.session",
-                "com.amazon.android.steps.bottombar",
-                "com.amazon.android.steps.browse",
-                "com.amazon.android.steps.orders"
+                "com.amazon.android.steps",
         },
         objectFactory = PicoFactory.class,
         plugin = {
