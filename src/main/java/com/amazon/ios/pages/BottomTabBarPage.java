@@ -21,6 +21,8 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
     @iOSXCUITFindBy(iOSNsPredicate = "name == 'home' OR name == 'meTab' OR name == 'cartTab' OR name == 'menuTab'")
     private List<WebElement> tabIcons;
 
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"searchTextField\"")
+    private WebElement searchInput;
 
     public BottomTabBarPage(IOSDriver driver) {
         this(driver, DEFAULT_WAIT);
@@ -37,5 +39,18 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
 
     public void tapProfileIcon() {
         wait.until(ExpectedConditions.elementToBeClickable(meTab)).click();
+    }
+
+    public boolean searchInputExist() {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(searchInput));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void tapSearchBox() {
+        wait.until(ExpectedConditions.elementToBeClickable(searchInput)).click();
     }
 }
