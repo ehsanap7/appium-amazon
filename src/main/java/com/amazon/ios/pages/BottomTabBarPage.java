@@ -1,7 +1,9 @@
 package com.amazon.ios.pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -59,5 +61,15 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
         WebElement el = wait.until(ExpectedConditions.elementToBeClickable(searchInput));
         el.clear();
         el.sendKeys(text);
+    }
+
+    public void tapFirstSearchResult(String text) {
+        WebElement el = wait.until(ExpectedConditions.elementToBeClickable(AppiumBy.iOSNsPredicateString("name == \"" + text + "\"")));
+        el.click();
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

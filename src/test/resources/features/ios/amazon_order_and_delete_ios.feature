@@ -6,6 +6,7 @@ Feature: Order An Item and Delete It (iOS)
     Then the search input field should be visible on iOS
     When I tap the search input field on iOS
     Then Write "<product>" in the search field on iOS
+    And Click on the first search result that value is "<product>" on iOS
 
     Examples:
       | product |
