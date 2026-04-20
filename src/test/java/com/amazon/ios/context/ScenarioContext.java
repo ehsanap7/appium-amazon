@@ -4,7 +4,6 @@ import com.amazon.ios.factory.IosAmazonPageFactory;
 import com.amazon.ios.pages.BottomTabBarPage;
 import com.amazon.ios.pages.OrderPillsPage;
 import com.amazon.ios.pages.OrdersRecentEmptyStatePage;
-import com.amazon.utils.AppiumUtils;
 import com.amazon.utils.IosUtils;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;

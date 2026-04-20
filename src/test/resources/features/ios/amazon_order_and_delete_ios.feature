@@ -7,6 +7,7 @@ Feature: Order An Item and Delete It (iOS)
     When I tap the search input field on iOS
     Then Write "<product>" in the search field on iOS
     And Click on the first search result that value is "<product>" on iOS
+    And Click on the Add to Cart button of first search result on iOS
 
     Examples:
       | product |

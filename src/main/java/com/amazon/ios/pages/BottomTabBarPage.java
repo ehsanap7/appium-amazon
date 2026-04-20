@@ -66,6 +66,11 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
     public void tapFirstSearchResult(String text) {
         WebElement el = wait.until(ExpectedConditions.elementToBeClickable(AppiumBy.iOSNsPredicateString("name == \"" + text + "\"")));
         el.click();
+    }
+
+    public void addToCart() {
+        WebElement el = wait.until(ExpectedConditions.elementToBeClickable(AppiumBy.iOSClassChain("**/XCUIElementTypeButton[`name == \"Add to cart\"`][1]")));
+        el.click();
         try {
             Thread.sleep(20000);
         } catch (InterruptedException e) {

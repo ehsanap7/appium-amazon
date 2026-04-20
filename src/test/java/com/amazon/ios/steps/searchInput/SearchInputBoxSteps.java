@@ -35,4 +35,9 @@ public final class SearchInputBoxSteps {
     public void clickOnFirstSearchResult(String product) {
         context.bottomTabBar().tapFirstSearchResult(product);
     }
+
+    @And("Click on the Add to Cart button of first search result on iOS")
+    public void clickOnAddToCart() {
+        context.bottomTabBar().addToCart();
+    }
 }
