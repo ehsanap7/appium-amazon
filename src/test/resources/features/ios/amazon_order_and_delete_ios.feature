@@ -5,5 +5,10 @@ Feature: Order An Item and Delete It (iOS)
     Given the Amazon shopping app is in the foreground on iOS
     Then the search input field should be visible on iOS
     When I tap the search input field on iOS
+    Then Write "<product>" in the search field on iOS
+
     Examples:
-      |  |
+      | product |
+      | bottle  |
+      | laptop  |
+      | book    |

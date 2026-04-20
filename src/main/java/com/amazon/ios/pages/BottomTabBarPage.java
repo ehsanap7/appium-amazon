@@ -11,8 +11,6 @@ import java.util.List;
 
 public class BottomTabBarPage extends AbstractIosAmazonPage {
 
-    private static final Duration DEFAULT_WAIT = Duration.ofSeconds(25);
-
     private final WebDriverWait wait;
 
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"meTab\"")
@@ -22,10 +20,13 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
     private List<WebElement> tabIcons;
 
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"searchTextField\"")
+    private WebElement searchInputBox;
+
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextView[`name == \"searchTextView\"`][1]")
     private WebElement searchInput;
 
     public BottomTabBarPage(IOSDriver driver) {
-        this(driver, DEFAULT_WAIT);
+        this(driver, Duration.ofSeconds(25));
     }
 
     public BottomTabBarPage(IOSDriver driver, Duration timeout) {
@@ -41,9 +42,9 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
         wait.until(ExpectedConditions.elementToBeClickable(meTab)).click();
     }
 
-    public boolean searchInputExist() {
+    public boolean searchInputBoxExist() {
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(searchInput));
+            wait.until(ExpectedConditions.elementToBeClickable(searchInputBox));
             return true;
         } catch (Exception e) {
             return false;
@@ -51,6 +52,12 @@ public class BottomTabBarPage extends AbstractIosAmazonPage {
     }
 
     public void tapSearchBox() {
-        wait.until(ExpectedConditions.elementToBeClickable(searchInput)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(searchInputBox)).click();
+    }
+
+    public void typeInSearchField(String text) {
+        WebElement el = wait.until(ExpectedConditions.elementToBeClickable(searchInput));
+        el.clear();
+        el.sendKeys(text);
     }
 }
