@@ -5,7 +5,7 @@ import io.cucumber.picocontainer.PicoFactory;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-        features = {"classpath:features/android/amazon_browse_orders_android.feature"},
+        features = {"classpath:features/android"},
         tags = "@android",
         glue = {
                 "com.amazon.android.steps",

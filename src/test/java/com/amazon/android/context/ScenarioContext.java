@@ -4,6 +4,7 @@ import com.amazon.android.factory.AmazonPageFactory;
 import com.amazon.android.pages.BottomTabBarPage;
 import com.amazon.android.pages.OrderPillsPage;
 import com.amazon.android.pages.OrdersRecentEmptyStatePage;
+import com.amazon.android.pages.ShoppingCartPage;
 import com.amazon.utils.AndroidUtils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
@@ -21,6 +22,7 @@ public final class ScenarioContext {
     private BottomTabBarPage bottomTabBar;
     private OrderPillsPage orderPills;
     private OrdersRecentEmptyStatePage ordersRecentEmptyState;
+    private ShoppingCartPage shoppingCart;
 
     public void startSession() throws IOException {
         if (driver != null) {
@@ -38,6 +40,7 @@ public final class ScenarioContext {
         bottomTabBar = factory.bottomTabBar();
         orderPills = factory.orderPills();
         ordersRecentEmptyState = factory.ordersRecentEmptyState();
+        shoppingCart = factory.shoppingCart();
     }
 
     public void endSession() {
@@ -51,6 +54,7 @@ public final class ScenarioContext {
             bottomTabBar = null;
             orderPills = null;
             ordersRecentEmptyState = null;
+            shoppingCart = null;
         }
     }
 
@@ -80,5 +84,9 @@ public final class ScenarioContext {
 
     public OrdersRecentEmptyStatePage ordersRecentEmptyState() {
         return ordersRecentEmptyState;
+    }
+
+    public ShoppingCartPage shoppingCart() {
+        return shoppingCart;
     }
 }

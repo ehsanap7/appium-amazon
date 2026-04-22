@@ -3,6 +3,7 @@ package com.amazon.android.factory;
 import com.amazon.android.pages.BottomTabBarPage;
 import com.amazon.android.pages.OrderPillsPage;
 import com.amazon.android.pages.OrdersRecentEmptyStatePage;
+import com.amazon.android.pages.ShoppingCartPage;
 import io.appium.java_client.android.AndroidDriver;
 
 import java.time.Duration;
@@ -34,5 +35,9 @@ public final class AmazonPageFactory {
 
     public OrdersRecentEmptyStatePage ordersRecentEmptyState() {
         return new OrdersRecentEmptyStatePage(driver);
+    }
+
+    public ShoppingCartPage shoppingCart() {
+        return new ShoppingCartPage(driver);
     }
 }
