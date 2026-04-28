@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="amazon-mobile" verbose="1" parallel="false">
-    <test name="cucumber-android">
+<suite name="amazon-mobile" verbose="1">
+    <test name="cucumber-mobile">
         <classes>
-            <class name="com.amazon.android.runner.CucumberRunner"/>
-        </classes>
-    </test>
-    <test name="cucumber-ios">
-        <classes>
-            <class name="com.amazon.ios.runner.CucumberRunner"/>
+            <class name="com.amazon.common.runner.CucumberRunner"/>
         </classes>
     </test>
 </suite>
