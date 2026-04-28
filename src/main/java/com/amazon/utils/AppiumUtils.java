@@ -1,7 +1,10 @@
 package com.amazon.utils;
 
+import io.appium.java_client.AppiumDriver;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.Properties;
 
 public abstract class AppiumUtils {
@@ -19,12 +22,18 @@ public abstract class AppiumUtils {
     }
 
     public static String need(String key) {
-        String v = LOCAL_PROPERTIES.getProperty(key);
+        String v = System.getProperty(key);
+
         if (v == null || v.isBlank()) {
-            throw new IllegalStateException("Missing '" + key + "' in local.properties.");
+            v = LOCAL_PROPERTIES.getProperty(key);
+        }
+
+        if (v == null || v.isBlank()) {
+            throw new IllegalStateException("Missing '" + key + "' in command line or local.properties.");
         }
         return v.trim();
     }
+
 
     public static Properties loadLocalProperties() throws IOException {
         Properties props = new Properties();
@@ -50,5 +59,18 @@ public abstract class AppiumUtils {
             return appiumServerUrlOverride;
         }
         return need("APPIUM_SERVER_URL");
+    }
+
+
+    public static AppiumDriver createSession() throws MalformedURLException {
+        String platform = need("TARGET_PLATFORM").toLowerCase();
+
+        if (platform.equals("android")) {
+            return AndroidUtils.newAmazonSessionOrThrow(AndroidUtils.buildAmazonSessionOptions());
+        } else if (platform.equals("ios")) {
+            return IosUtils.newAmazonSessionOrThrow(IosUtils.buildAmazonSessionOptions());
+        } else {
+            throw new IllegalArgumentException("Unknown TARGET_PLATFORM specified: " + platform);
+        }
     }
 }
